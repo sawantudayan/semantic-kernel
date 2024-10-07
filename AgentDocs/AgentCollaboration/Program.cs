@@ -153,7 +153,7 @@ public static class Program
                             // The prompt variable name for the history argument.
                             HistoryVariableName = "lastmessage",
                             // Returns the entire result value as a string.
-                            ResultParser = (result) => result.GetValue<string>() ?? agentReviewer.Name,
+                            ResultParser = (result) => result.GetValue<string>() ?? agentReviewer.Name
                         },
                     TerminationStrategy =
                         new KernelFunctionTerminationStrategy(terminationFunction, kernel)
@@ -167,7 +167,7 @@ public static class Program
                             // Limit total number of turns
                             MaximumIterations = 12,
                             // Customer result parser to determine if the response is "yes"
-                            ResultParser = (result) => result.GetValue<string>()?.Contains(TerminationToken, StringComparison.OrdinalIgnoreCase) ?? false;
+                            ResultParser = (result) => result.GetValue<string>()?.Contains(TerminationToken, StringComparison.OrdinalIgnoreCase) ?? false
                         }
                 }
             };
