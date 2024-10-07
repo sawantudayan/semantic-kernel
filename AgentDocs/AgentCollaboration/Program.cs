@@ -30,7 +30,7 @@ namespace AgentsSample;
  * 4. Semantic Kernel (SK) is an open-source SDK that enables developers to build and orchestrate complex AI workflows that involve natural language processing (NLP) and machine learning models. It provies a flexible platform for integrating AI capabilities such as semantic search, text summarization, and dialogue systems into applications. With SK, you can easily combine different AI services and models, define thei relationships, and orchestrate interactions between them.
  * 5. make this two paragraphs
  * 6. thank you
- * 7. @C:\Users\crickman\source\repos\semantic-kernel3\dotnet\samples\LearnResources\Resources\WomensSuffrage.txt
+ * 7. @.\WomensSuffrage.txt
  * 8. its good, but is it ready for my college professor? 
  ******************/
 

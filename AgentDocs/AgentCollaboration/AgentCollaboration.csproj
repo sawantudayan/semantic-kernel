@@ -22,5 +22,11 @@
   <ItemGroup>
     <Compile Include="../Common/Settings.cs" Link="Common/%(Filename)%(Extension)" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <None Include="../../dotnet/Samples/LearnResources/Resources/WomensSuffrage.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
 </Project>
