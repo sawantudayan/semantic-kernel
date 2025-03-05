@@ -59,9 +59,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="$(RepoRoot)/dotnet/samples/LearnResources/Resources/Grimms-The-King-of-the-Golden-Mountain.txt" Link="%(RecursiveDir)Resources/%(Filename)%(Extension)"/>
-    <EmbeddedResource Include="$(RepoRoot)/dotnet/samples/LearnResources/Resources/Grimms-The-Water-of-Life.txt" Link="%(RecursiveDir)Resources/%(Filename)%(Extension)"/>
-    <EmbeddedResource Include="$(RepoRoot)/dotnet/samples/LearnResources/Resources/Grimms-The-White-Snake.txt" Link="%(RecursiveDir)Resources/%(Filename)%(Extension)"/>
+    <EmbeddedResource Include="$(RepoRoot)/dotnet/samples/LearnResources/Resources/Grimms-The-King-of-the-Golden-Mountain.txt" Link="%(RecursiveDir)Resources/%(Filename)%(Extension)" />
+    <EmbeddedResource Include="$(RepoRoot)/dotnet/samples/LearnResources/Resources/Grimms-The-Water-of-Life.txt" Link="%(RecursiveDir)Resources/%(Filename)%(Extension)" />
+    <EmbeddedResource Include="$(RepoRoot)/dotnet/samples/LearnResources/Resources/Grimms-The-White-Snake.txt" Link="%(RecursiveDir)Resources/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Step04b\Plugins\" />
   </ItemGroup>
 
 </Project>
