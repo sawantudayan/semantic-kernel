@@ -100,7 +100,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
                         AuthorName = nameof(OrchestratorAgent),
                     };
                 this.Chat.Add(instruction);
-                await this.PublishMessageAsync(instruction.ToGroup(), ChatAgent.GroupChatTopic).ConfigureAwait(false);
+                await this.PublishMessageAsync(instruction.ToGroup(), Framework.AgentProxy.GroupChatTopic).ConfigureAwait(false);
 
                 return value.Topic;
             }
@@ -114,7 +114,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
             {
                 if (retryCount >= this.MaximumRetryCount)
                 {
-                    await this.PublishMessageAsync(new ChatMessageContent(AuthorRole.User, "I've experienced multiple failures and am unable to continue.").ToGroup(), ChatAgent.GroupChatTopic).ConfigureAwait(false);
+                    await this.PublishMessageAsync(new ChatMessageContent(AuthorRole.User, "I've experienced multiple failures and am unable to continue.").ToGroup(), Framework.AgentProxy.GroupChatTopic).ConfigureAwait(false);
                     return null;
                 }
 
@@ -123,7 +123,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
 
                 Debug.WriteLine($"TASK RESET [#{retryCount}]");
 
-                await this.PublishMessageAsync(new Messages.Reset(), ChatAgent.GroupChatTopic).ConfigureAwait(false);
+                await this.PublishMessageAsync(new Messages.Reset(), Framework.AgentProxy.GroupChatTopic).ConfigureAwait(false);
                 await this.UpdateTaskAsync().ConfigureAwait(false);
             }
         }
@@ -155,7 +155,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
             };
         this._state.Facts = await this.GetResponseAsync(internalChat, Prompts.NewFactsTemplate, arguments).ConfigureAwait(false);
         Debug.WriteLine($"\n<FACTS>:\n{this._state.Facts}\n</FACTS>\n");
-        await this.PublishMessageAsync(this._state.Facts.ToProgress("Analyzed task..."), ChatAgent.InnerChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(this._state.Facts.ToProgress("Analyzed task..."), Framework.AgentProxy.InnerChatTopic).ConfigureAwait(false);
     }
 
     private async Task UpdateFactsAsync(ChatHistory internalChat)
@@ -168,7 +168,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
             };
         this._state.Facts = await this.GetResponseAsync(internalChat, Prompts.NewFactsTemplate, arguments).ConfigureAwait(false);
         Debug.WriteLine($"\n<FACTS>:\n{this._state.Facts}\n</FACTS>\n");
-        await this.PublishMessageAsync(this._state.Facts.ToProgress("Analyzed task..."), ChatAgent.InnerChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(this._state.Facts.ToProgress("Analyzed task..."), Framework.AgentProxy.InnerChatTopic).ConfigureAwait(false);
     }
 
     private async Task AnalyzePlanAsync(ChatHistory internalChat)
@@ -184,7 +184,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
             };
         this._state.Plan = await this.GetResponseAsync(internalChat, Prompts.NewPlanTemplate, arguments).ConfigureAwait(false);
         Debug.WriteLine($"\n<PLAN>:\n{this._state.Plan}\n</PLAN>\n");
-        await this.PublishMessageAsync(this._state.Plan.ToProgress("Generated plan..."), ChatAgent.InnerChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(this._state.Plan.ToProgress("Generated plan..."), Framework.AgentProxy.InnerChatTopic).ConfigureAwait(false);
     }
 
     private async Task UpdatePlanAsync(ChatHistory internalChat)
@@ -196,7 +196,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
             };
         this._state.Plan = await this.GetResponseAsync(internalChat, Prompts.NewPlanTemplate, arguments).ConfigureAwait(false);
         Debug.WriteLine($"\n<PLAN>:\n{this._state.Plan}\n</PLAN>\n");
-        await this.PublishMessageAsync(this._state.Plan.ToProgress("Generated plan..."), ChatAgent.InnerChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(this._state.Plan.ToProgress("Generated plan..."), Framework.AgentProxy.InnerChatTopic).ConfigureAwait(false);
     }
 
     private async Task GenerateLedgerAsync(ChatHistory internalChat)
@@ -211,7 +211,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
             };
         this._state.Ledger = await this.GetMessageAsync(Prompts.LedgerTemplate, arguments).ConfigureAwait(false);
         this.Chat.Add(this._state.Ledger);
-        await this.PublishMessageAsync(this._state.Ledger.ToGroup(), ChatAgent.GroupChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(this._state.Ledger.ToGroup(), Framework.AgentProxy.GroupChatTopic).ConfigureAwait(false);
     }
 
     private async Task<LedgerStatus> AnalyzeStatusAsync()
@@ -226,7 +226,7 @@ public sealed partial class OrchestratorAgent : ManagerAgent
                 { Prompts.Parameters.Facts, this._state.Facts },
             };
         ChatMessageContent response = await this.GetResponseAsync(internalChat, Prompts.StatusTemplate, arguments, executionSettings).ConfigureAwait(false);
-        await this.PublishMessageAsync(response.ToProgress("Evaluted status..."), ChatAgent.InnerChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(response.ToProgress("Evaluted status..."), Framework.AgentProxy.InnerChatTopic).ConfigureAwait(false);
         LedgerStatus status = response.GetValue<LedgerStatus>();
         Debug.WriteLine(status.AsJson());
         return status;

@@ -33,9 +33,9 @@ public static class CoderAgent
     /// Creates a new agent.
     /// </summary>
     /// <param name="kernel">A kernel with the required services for the agnet</param>
-    /// <param name="client">// %%% COMMENT</param>
-    public static async Task<OpenAIAssistantAgent> CreateAsync(Kernel kernel, AssistantClient client)
+    public static async Task<OpenAIAssistantAgent> CreateAsync(Kernel kernel)
     {
+        AssistantClient client = kernel.GetRequiredService<AssistantClient>();
         string model = kernel.GetRequiredService<string>();
         Assistant assistant =
             await client.CreateAssistantAsync(

@@ -25,27 +25,25 @@ public static class RuntimeExtensions
         ChatCompletionAgent researchAgent =
             await runtime.RegisterAgentAsync(
                 ResearchAgent.Create(kernel.Clone()),
-                ChatAgent.GroupChatTopic.Type,
+                Framework.AgentProxy.GroupChatTopic.Type,
                 Topics.ResearchAgentTopic).ConfigureAwait(false);
 
-        AssistantClient client = kernel.GetRequiredService<AssistantClient>();
         OpenAIAssistantAgent coderAgent =
             await runtime.RegisterAgentAsync(
-                await CoderAgent.CreateAsync(kernel, client).ConfigureAwait(false),
-                client,
-                ChatAgent.GroupChatTopic.Type,
+                await CoderAgent.CreateAsync(kernel).ConfigureAwait(false),
+                Framework.AgentProxy.GroupChatTopic.Type,
                 Topics.CoderAgentTopic).ConfigureAwait(false);
 
         ChatCompletionAgent illustratorAgent =
             await runtime.RegisterAgentAsync(
                 IllustratorAgent.Create(kernel.Clone()),
-                ChatAgent.GroupChatTopic.Type,
+                Framework.AgentProxy.GroupChatTopic.Type,
                 Topics.IllustratorAgentTopic).ConfigureAwait(false);
 
         await runtime.RegisterUserProxyAsync(
             uxServices,
-            ChatAgent.GroupChatTopic.Type,
-            ChatAgent.InnerChatTopic.Type,
+            Framework.AgentProxy.GroupChatTopic.Type,
+            Framework.AgentProxy.InnerChatTopic.Type,
             Topics.UserProxyTopic).ConfigureAwait(false);
 
         AgentTeam team =
@@ -71,7 +69,7 @@ public static class RuntimeExtensions
         await runtime.RegisterAgentFactoryAsync(
             OrchestratorAgent.TypeId,
             (agentId, runtime) => ValueTask.FromResult<IHostableAgent>(new OrchestratorAgent(agentId, runtime, kernel.Clone(), team))).ConfigureAwait(false);
-        await runtime.RegisterTopics(OrchestratorAgent.TypeId, ChatAgent.GroupChatTopic.Type).ConfigureAwait(false);
+        await runtime.RegisterTopics(OrchestratorAgent.TypeId, Framework.AgentProxy.GroupChatTopic.Type).ConfigureAwait(false);
     }
 
     /// <summary>

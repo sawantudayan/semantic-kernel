@@ -69,6 +69,6 @@ public sealed class UserProxyAgent : RuntimeAgent
         }
         while (string.IsNullOrWhiteSpace(userInput));
 
-        await this.PublishMessageAsync(new ChatMessageContent(AuthorRole.User, userInput).ToGroup(), ChatAgent.GroupChatTopic).ConfigureAwait(false);
+        await this.PublishMessageAsync(new ChatMessageContent(AuthorRole.User, userInput).ToGroup(), Framework.AgentProxy.GroupChatTopic).ConfigureAwait(false);
     }
 }

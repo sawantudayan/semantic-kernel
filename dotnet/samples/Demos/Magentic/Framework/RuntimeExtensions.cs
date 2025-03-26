@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using Microsoft.SemanticKernel.Agents;
-using Microsoft.SemanticKernel.Agents.OpenAI;
-using OpenAI.Assistants;
 
 namespace Magentic.Framework;
 
@@ -18,32 +16,13 @@ public static class RuntimeExtensions
     /// <param name="agent">A <see cref="ChatCompletionAgent"/> to register.</param>
     /// <param name="topics">The topics to which the agent is subscribed.</param>
     /// <returns></returns>
-    public static async Task<ChatCompletionAgent> RegisterAgentAsync(this IAgentRuntime runtime, ChatCompletionAgent agent, params string[] topics)
+    public static async Task<TAgent> RegisterAgentAsync<TAgent>(this IAgentRuntime runtime, TAgent agent, params string[] topics)
+        where TAgent : Agent
     {
         string agentType = agent.Name ?? agent.Id;
         await runtime.RegisterAgentFactoryAsync(
             agent.Name ?? agent.Id,
-            (agentId, runtime) => ValueTask.FromResult<IHostableAgent>(new ChatAgent(agentId, runtime, agent))).ConfigureAwait(false);
-
-        await runtime.RegisterTopics(agentType, topics).ConfigureAwait(false);
-
-        return agent;
-    }
-
-    /// <summary>
-    /// Register a <see cref="OpenAIAssistantAgent"/> with an <see cref="IAgentRuntime"/>.
-    /// </summary>
-    /// <param name="runtime">A process runtime.</param>
-    /// <param name="agent">A <see cref="ChatCompletionAgent"/> to register.</param>
-    /// <param name="client">// %%% COMMENT</param>
-    /// <param name="topics">The topics to which the agent is subscribed.</param>
-    /// <returns></returns>
-    public static async Task<OpenAIAssistantAgent> RegisterAgentAsync(this IAgentRuntime runtime, OpenAIAssistantAgent agent, AssistantClient client, params string[] topics)
-    {
-        string agentType = agent.Name ?? agent.Id;
-        await runtime.RegisterAgentFactoryAsync(
-            agent.Name ?? agent.Id,
-            (agentId, runtime) => ValueTask.FromResult<IHostableAgent>(new AssistantAgent(agentId, runtime, agent, client))).ConfigureAwait(false);
+            (agentId, runtime) => ValueTask.FromResult<IHostableAgent>(new AgentProxy(agentId, runtime, agent))).ConfigureAwait(false);
 
         await runtime.RegisterTopics(agentType, topics).ConfigureAwait(false);
 
