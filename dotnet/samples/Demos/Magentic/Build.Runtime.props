@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <SharedRuntime>true</SharedRuntime>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(SharedRuntime)' == 'true'">
+    <PackageReference Include="Microsoft.AgentRuntime.Abstractions" />
+    <PackageReference Include="Microsoft.AgentRuntime.InProcess" />
+    <Using Include="Microsoft.AgentRuntime" />
+    <Using Include="Microsoft.AgentRuntime.InProcess" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SharedRuntime)' != 'true'">
+    <PackageReference Include="Microsoft.AutoGen.Core" />
+    <Using Include="Microsoft.AutoGen.Contracts" />
+    <Using Include="Microsoft.AutoGen.Core" />
+  </ItemGroup>
+
+</Project>

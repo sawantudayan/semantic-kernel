@@ -13,7 +13,7 @@ namespace Microsoft.SemanticKernel.Agents.OpenAI.Internal;
 /// <remarks>
 /// Improves testability.
 /// </remarks>
-internal static class AssistantMessageFactory
+public static class AssistantMessageFactory
 {
     /// <summary>
     /// Produces <see cref="MessageCreationOptions"/> based on <see cref="ChatMessageContent"/>.

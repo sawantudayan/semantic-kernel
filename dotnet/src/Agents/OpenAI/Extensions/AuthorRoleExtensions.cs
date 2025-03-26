@@ -4,7 +4,10 @@ using OpenAI.Assistants;
 
 namespace Microsoft.SemanticKernel.Agents.OpenAI;
 
-internal static class AuthorRoleExtensions
+/// <summary>
+/// %%% COMMENT
+/// </summary>
+public static class AuthorRoleExtensions
 {
     /// <summary>
     /// Convert an <see cref="AuthorRole"/> to a <see cref="MessageRole"/>

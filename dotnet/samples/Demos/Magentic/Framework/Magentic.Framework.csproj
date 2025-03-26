@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CA1716;IDE1006;OPENAI001;SKEXP0001</NoWarn>
+    <UserSecretsId>5ee045b0-aea3-4f08-8d31-32d1a6f8fed0</UserSecretsId>
+  </PropertyGroup>
+
+  <Import Project="../Build.Runtime.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Agents\Core\Agents.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Agents\OpenAI\Agents.OpenAI.csproj" />
+  </ItemGroup>
+
+</Project>
