@@ -41,15 +41,21 @@ public sealed class AgentProxy : ManagedAgent
         if (this._thread is not null)
         {
             await this._thread.DeleteAsync().ConfigureAwait(false);
+            this._thread = null;
         }
     }
 
     /// <inheritdoc/>
     protected override async ValueTask<ChatMessageContent> SpeakAsync()
     {
-        AgentResponseItem<ChatMessageContent> response = await this._agent.InvokeAsync(this._cache, this._thread).SingleAsync().ConfigureAwait(false);
+        AgentResponseItem<ChatMessageContent>[] responses = await this._agent.InvokeAsync(this._cache, this._thread).ToArrayAsync().ConfigureAwait(false);
+        AgentResponseItem<ChatMessageContent> response = responses.First();
         this._thread ??= response.Thread;
         this._cache.Clear();
-        return response.Message;
+        return
+            new ChatMessageContent(response.Message.Role, string.Join("\n\n", responses.Select(response => response.Message)))
+            {
+                AuthorName = response.Message.AuthorName,
+            };
     }
 }
